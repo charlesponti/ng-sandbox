@@ -1,0 +1,8 @@
+mat-progress-spinner {
+  margin: 0 auto;
+}
+
+.login-container,
+.loading-container {
+  text-align: center;
+}

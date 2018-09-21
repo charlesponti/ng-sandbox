@@ -1,0 +1,15 @@
+<div class="mdc-layout-grid__inner"
+     *ngIf="user$ | async as user">
+  <div class="mdc-layout-grid__cell--span-10 loading-container"
+       *ngIf="user.loading">
+    <mat-progress-spinner color="primary"
+                          mode="indeterminate"
+                          diameter="33"></mat-progress-spinner>
+    <h1>Loading User...</h1>
+  </div>
+
+  <div class="mdc-layout-grid__cell--span-10 login-container"
+       *ngIf="!user.loading">
+    <h1 *ngIf="user.uid">👋 Howdy, {{user.displayName}} 👋</h1>
+  </div>
+</div>
