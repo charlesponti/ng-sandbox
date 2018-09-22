@@ -1,0 +1,23 @@
+<div class="mdc-layout-grid__cell--inner">
+  <div class="mdc-layout-grid__cell--cell--span-2">
+    <button mat-raised-button
+            color="primary"
+            (click)="navigateToCreate()">Create Tutorial</button>
+  </div>
+  <div class="mdc-layout-grid__cell--span-10">
+    <h3>Tutorials</h3>
+    <mat-card *ngFor="let tutorial of tutorials | async; let i = index">
+      <mat-card-title> {{ tutorial.name }} </mat-card-title>
+      <mat-card-content>
+        <a [href]="tutorial.url"
+           target="_blank"> {{tutorial.url}}</a>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button
+                color="warn"
+                (click)="onRemove(i)"
+                style="margin-left: 1rem">Remove</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

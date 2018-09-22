@@ -1,27 +1,47 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+
 import { AppComponent } from './app.component';
+import { AppMainNavModule } from './app-main-nav/app-main-nav.module';
+import { routes } from './app-routing.module';
+import { TutorialsModule } from './tutorials/tutorials.module';
+import { Router } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Location } from '@angular/common';
+
 describe('AppComponent', () => {
+  let router: Router;
+  let location: Location;
+
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+    TestBed
+      .configureTestingModule({
+        imports: [
+          AppMainNavModule,
+          TutorialsModule,
+          BrowserAnimationsModule,
+          RouterTestingModule.withRoutes(routes)
+        ],
+        declarations: [
+          AppComponent
+        ],
+      })
+      .compileComponents();
+
+    router = TestBed.get(Router);
+    location = TestBed.get(Location);
+    router.initialNavigation();
   }));
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+
+  it('should navigate to tutorials', fakeAsync(() => {
+    router.navigate(['tutorials']);
+    tick();
+    expect(location.path()).toEqual('/tutorials');
   }));
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
+
+  it('should navigate to tutorials/create', fakeAsync(() => {
+    router.navigate(['tutorials', 'create']);
+    tick();
+    expect(location.path()).toEqual('/tutorials/create');
   }));
 });
