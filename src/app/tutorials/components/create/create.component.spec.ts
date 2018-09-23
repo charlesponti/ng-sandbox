@@ -10,6 +10,8 @@ import { By } from '@angular/platform-browser';
 import { AppState } from '../../../app.state';
 import { AddTutorial } from '../../../actions/tutorial.actions';
 import { tutorialReducer } from '../../../reducers/tutorial.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { TutorialsEffects } from '../../../effects/tutorial.effects';
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
@@ -21,7 +23,8 @@ describe('CreateComponent', () => {
       .configureTestingModule({
         imports: [
           TutorialsModule,
-          StoreModule.forRoot(tutorialReducer),
+          EffectsModule.forRoot([TutorialsEffects]),
+          StoreModule.forRoot({ tutorials: tutorialReducer }),
           BrowserAnimationsModule,
           RouterTestingModule.withRoutes(routes)
         ]
@@ -52,6 +55,6 @@ describe('CreateComponent', () => {
 
     spyOn(store, 'dispatch').and.callThrough();
     fixture.nativeElement.querySelector('form button').click();
-    expect(store.dispatch).toHaveBeenCalledWith(new AddTutorial(value));
+    expect(store.dispatch).toHaveBeenCalledWith(new AddTutorial([value]));
   });
 });

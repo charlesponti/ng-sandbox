@@ -30,7 +30,7 @@ export class CreateComponent {
 
   addTutorial() {
     const { name, url } = this.values;
-    this.store.dispatch(new TutorialActions.AddTutorial({ name, url }));
+    this.store.dispatch(new TutorialActions.AddTutorial([{ name, url }]));
     // this.formGroup.reset();
     this.router.navigate(['/tutorials']);
   }

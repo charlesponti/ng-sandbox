@@ -1,18 +1,22 @@
 import { Tutorial } from '../models/tutorial.model';
 import * as TutorialActions from '../actions/tutorial.actions';
 
-const initialState: Tutorial = {
-    name: 'Initial Tutorial',
-    url: 'https://www.google.com'
-};
+export interface TutorialState {
+  loading: boolean;
+  tutorials: Tutorial[];
+}
 
-export function tutorialReducer(state: Tutorial[] = [initialState], action: TutorialActions.Actions) {
+const initialState = { loading: false, tutorials: [] };
+
+export function tutorialReducer(state: TutorialState = initialState, action: TutorialActions.Actions): TutorialState {
     switch (action.type) {
+        case TutorialActions.GET_TUTORIALS:
         case TutorialActions.ADD_TUTORIAL:
-            return [ ...state, action.payload ];
         case TutorialActions.REMOVE_TUTORIAL:
-            return  state.filter((i, index) => index !== action.payload);
+            return { ...state, loading: true };
+        case TutorialActions.LOAD_TUTORIALS:
+          return { ...state, loading: false, tutorials: action.payload };
         default:
-            return state;
+          return state;
     }
 }

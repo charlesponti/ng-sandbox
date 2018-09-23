@@ -14,6 +14,8 @@ import { AppComponent } from './app.component';
 import { tutorialReducer } from './reducers/tutorial.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppMainNavModule } from './app-main-nav/app-main-nav.module';
+import { EffectsModule } from '@ngrx/effects';
+import { TutorialsEffects } from './effects/tutorial.effects';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { AppMainNavModule } from './app-main-nav/app-main-nav.module';
     BrowserAnimationsModule,
     TutorialsModule,
     AppRoutingModule,
+    EffectsModule.forRoot([TutorialsEffects]),
     StoreModule.forRoot({
       tutorials: tutorialReducer
     }),
